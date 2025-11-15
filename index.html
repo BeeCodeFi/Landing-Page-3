@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trikha Weaving Factory — Modern Light Theme</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #fffef9;
+        --surface: #f6fbf8; /* very light mint */
+        --card: #ffffff;
+        --muted: #55606a; /* softened slate for text */
+        --accent: #0ea5a4; /* teal-cyan - primary eye-friendly accent */
+        --accent-2: #ffd166; /* warm soft yellow for highlights */
+        --accent-3: #ff7aa2; /* gentle coral for contrast */
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial;
+        background: var(--surface);
+        color: #0f1724;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Layout */
+      .app-shell {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 24px;
+      }
+      .sidebar {
+        background: linear-gradient(180deg, var(--card), #fbfeff);
+        border-right: 1px solid #eef2f7;
+        padding: 28px;
+      }
+      .brand {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .brand .logo {
+        width: 56px;
+        height: 56px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        color: white;
+        background: linear-gradient(135deg, var(--accent), #0b5ed7);
+      }
+      nav .nav-link {
+        color: var(--muted);
+        padding: 8px 0;
+      }
+      nav .nav-link.active {
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      /* Main content */
+      main {
+        padding: 36px;
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1fr 420px;
+        gap: 28px;
+        align-items: center;
+      }
+      .hero-card {
+        background: var(--card);
+        border-radius: 12px;
+        padding: 28px;
+        box-shadow: 0 6px 20px rgba(11, 84, 166, 0.06);
+      }
+      .hero-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .hero-sub {
+        color: var(--muted);
+        margin-bottom: 18px;
+      }
+      .pill {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(11, 132, 255, 0.08);
+        color: var(--accent);
+        font-weight: 600;
+        margin-bottom: 12px;
+      }
+
+      /* product grid */
+      .products {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 18px;
+      }
+      .product-card {
+        background: var(--card);
+        border-radius: 12px;
+        padding: 14px;
+        border: 1px solid #eef2f7;
+      }
+      .product-card img {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      /* contact */
+      .contact-card {
+        background: linear-gradient(180deg, #ffffff, #f8fbff);
+        border: 1px solid #eef2f7;
+        padding: 18px;
+        border-radius: 12px;
+      }
+
+      footer {
+        padding: 28px;
+        background: transparent;
+        border-top: 1px solid #eef2f7;
+        color: var(--muted);
+      }
+
+      /* responsive improvements for mobile friendliness */
+      @media (max-width: 991px) {
+        .app-shell {
+          grid-template-columns: 1fr;
+        }
+
+        /* Make the sidebar act like a compact top bar with horizontal nav */
+        .sidebar {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          padding: 12px 14px;
+          border-right: none;
+          border-bottom: 1px solid #eef2f7;
+          position: sticky;
+          top: 0;
+          z-index: 30;
+          background: linear-gradient(180deg, var(--card), #fbfeff);
+        }
+
+        .sidebar .brand {
+          gap: 10px;
+        }
+
+        /* ---- MOBILE: hide inline nav and show hamburger toggle instead ---- */
+        nav {
+          display: none; /* hide original inline nav on small screens */
+        }
+        .mobile-toggle {
+          display: inline-flex; /* hamburger visible on mobile */
+          align-items: center;
+          gap: 8px;
+        }
+
+        /* collapse long nav into a horizontally scrollable row (kept for larger small screens if needed) */
+        nav.mobile-inline {
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          flex: 1 1 auto;
+          margin-left: 12px;
+        }
+
+        nav .nav-link {
+          white-space: nowrap;
+          padding: 8px 10px;
+          border-radius: 8px;
+        }
+
+        main {
+          padding: 18px 16px;
+        }
+
+        .hero-grid {
+          grid-template-columns: 1fr;
+          gap: 18px;
+        }
+
+        .hero-card {
+          padding: 18px;
+        }
+
+        /* make product images a bit taller for touch targets */
+        .product-card img {
+          height: 200px;
+        }
+
+        /* stack contact form and details (no form present anymore) */
+        #contact > div[style*="grid-template-columns"] {
+          display: block;
+        }
+
+        /* make buttons full-width on small screens */
+        .btn {
+          min-height: 44px;
+        }
+        .hero-card .btn {
+          flex: 1 1 auto;
+        }
+
+        /* ensure contact aside flows below form */
+        section#contact .hero-card + aside {
+          margin-top: 16px;
+        }
+      }
+
+      /* extra small devices - increase tap targets and spacing */
+      @media (max-width: 575px) {
+        .brand .logo {
+          width: 48px;
+          height: 48px;
+        }
+
+        .hero-title {
+          font-size: 22px;
+        }
+
+        .product-card img {
+          height: 180px;
+        }
+
+        /* make primary call-to-action full width */
+        .hero-card a.btn-primary,
+        .hero-card a.btn-outline-primary,
+        .contact-card .btn {
+          display: block;
+          width: 100%;
+          margin-bottom: 8px;
+        }
+
+        /* increase padding inside cards for comfortable reading */
+        .hero-card,
+        .contact-card,
+        .product-card {
+          padding: 16px;
+        }
+      }
+
+      /* desktop: hide mobile toggle */
+      .mobile-toggle {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="brand mb-3">
+          <div class="logo">TWF</div>
+          <div>
+            <div style="font-weight: 800">Trikha Weaving</div>
+            <div style="font-size: 13px; color: var(--muted)">
+              Manufacturers & Traders
+            </div>
+          </div>
+        </div>
+
+        <!-- MOBILE TOGGLE (visible only on small screens) -->
+        <div class="mobile-toggle">
+          <!-- Button triggers offcanvas with the same nav and contact info -->
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#mobileNav"
+            aria-controls="mobileNav"
+            aria-label="Open navigation"
+          >
+            <!-- simple hamburger icon -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1.75 2.5a.75.75 0 0 1 .75-.75h11a.75.75 0 0 1 0 1.5h-11a.75.75 0 0 1-.75-.75zm0 5a.75.75 0 0 1 .75-.75h11a.75.75 0 0 1 0 1.5h-11A.75.75 0 0 1 1.75 7.5zm0 5a.75.75 0 0 1 .75-.75h11a.75.75 0 0 1 0 1.5h-11a.75.75 0 0 1-.75-.75z"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <!-- ORIGINAL NAV (visible on desktop; hidden on mobile by CSS) -->
+        <nav class="mt-4">
+          <a class="nav-link active d-block" href="#home">Overview</a>
+          <a class="nav-link d-block" href="#products">Products</a>
+          <a class="nav-link d-block" href="#about">About</a>
+          <a class="nav-link d-block" href="#contact">Contact</a>
+        </nav>
+
+        <hr style="margin: 18px 0; border-color: #eef6ff" />
+        <div style="font-size: 13px; color: var(--muted)">
+          <div style="font-weight: 700">GST</div>
+          <div>03AAAFT6655Q1ZP</div>
+          <div class="mt-3" style="font-weight: 700">Phone</div>
+          <div>98158-33885</div>
+          <div>98726-64833</div>
+        </div>
+      </aside>
+
+      <!-- OFFCANVAS: mobile navigation and details (same content as sidebar) -->
+      <div
+        class="offcanvas offcanvas-start"
+        tabindex="-1"
+        id="mobileNav"
+        aria-labelledby="mobileNavLabel"
+      >
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="mobileNavLabel">
+            <span
+              class="logo"
+              style="
+                width: 40px;
+                height: 40px;
+                font-size: 14px;
+                display: inline-grid;
+                place-items: center;
+                border-radius: 8px;
+                background: linear-gradient(135deg, var(--accent), #0b5ed7);
+                color: #fff;
+              "
+              >TWF</span
+            >
+            <span style="margin-left: 10px; font-weight: 700"
+              >Trikha Weaving</span
+            >
+          </h5>
+          <button
+            type="button"
+            class="btn-close text-reset"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body">
+          <nav class="d-flex flex-column">
+            <a class="nav-link active" href="#home" data-bs-dismiss="offcanvas"
+              >Overview</a
+            >
+            <a class="nav-link" href="#products" data-bs-dismiss="offcanvas"
+              >Products</a
+            >
+            <a class="nav-link" href="#about" data-bs-dismiss="offcanvas"
+              >About</a
+            >
+            <a class="nav-link" href="#contact" data-bs-dismiss="offcanvas"
+              >Contact</a
+            >
+          </nav>
+
+          <hr style="margin: 18px 0; border-color: #eef6ff" />
+
+          <div style="font-size: 14px; color: var(--muted)">
+            <div style="font-weight: 700">GST</div>
+            <div>03AAAFT6655Q1ZP</div>
+            <div class="mt-3" style="font-weight: 700">Phone</div>
+            <div>98158-33885</div>
+            <div>98726-64833</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN -->
+      <main>
+        <section id="home" class="mb-4">
+          <div class="hero-card">
+            <div
+              style="
+                display: flex;
+                gap: 20px;
+                align-items: center;
+                flex-wrap: wrap;
+              "
+            >
+              <div style="flex: 1; min-width: 220px">
+                <span class="pill">Established 1978</span>
+                <h1 class="hero-title">Trikha Weaving Factory</h1>
+                <p class="hero-sub">
+                  High-quality art-silk, cotton cloth, knitted fabrics and
+                  shawls — manufactured in Ludhiana with bulk supply capability
+                  for retailers and institutions.
+                </p>
+
+                <div
+                  style="
+                    display: flex;
+                    gap: 10px;
+                    margin-top: 16px;
+                    flex-wrap: wrap;
+                  "
+                >
+                  <!-- Enquire Now removed -->
+                  <a href="#products" class="btn btn-primary">See Catalogue</a>
+                </div>
+
+                <div
+                  style="margin-top: 18px; color: var(--muted); font-size: 14px"
+                >
+                  <strong>Address:</strong> B-XXX-4190/1, St. No. 6, Beant Pura,
+                  Chandigarh Road, Ludhiana-141003
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="products" class="mb-4">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 12px;
+            "
+          >
+            <h3 style="margin: 0">Products</h3>
+            <small style="color: var(--muted)"
+              >Art-silk · Cotton Cloth · Knitted Fabrics · Shawls</small
+            >
+          </div>
+
+          <div class="products">
+            <div class="product-card">
+              <img src="./images/art silk fabric.jpg" alt="Art-silk" />
+              <div style="padding-top: 10px">
+                <div style="font-weight: 700">Art-Silk Fabric</div>
+                <div style="color: var(--muted); font-size: 13px">
+                  Bright shine, multiple weights and widths.
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <img src="./images/cotton fabrics.jpg" alt="Cotton Cloth" />
+              <div style="padding-top: 10px">
+                <div style="font-weight: 700">Cotton Cloth</div>
+                <div style="color: var(--muted); font-size: 13px">
+                  Durable plain and printed cotton for garments.
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <img src="./images/knit fabric.jpeg" alt="Knitted" />
+              <div style="padding-top: 10px">
+                <div style="font-weight: 700">Knitted Fabrics</div>
+                <div style="color: var(--muted); font-size: 13px">
+                  Stretchy, uniform knits for sweaters & more.
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <img src="./images/shawls.png" alt="Shawl" />
+              <div style="padding-top: 10px">
+                <div style="font-weight: 700">Shawls & Wraps</div>
+                <div style="color: var(--muted); font-size: 13px">
+                  Traditional and modern designs available.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="about" class="mb-4">
+          <div class="hero-card">
+            <div
+              style="
+                display: flex;
+                gap: 18px;
+                align-items: flex-start;
+                flex-wrap: wrap;
+              "
+            >
+              <div style="flex: 1 1 420px">
+                <h4 style="margin-top: 0">About Us</h4>
+                <p style="color: var(--muted)">
+                  Trikha Weaving Factory has been manufacturing textile goods
+                  since 1978. Located on Chandigarh Road, Ludhiana, we
+                  specialise in art-silk, cotton cloth, knitted fabrics and
+                  shawls — offering bulk supply to retailers, wholesalers and
+                  institutions with quality checks at every stage.
+                </p>
+
+                <ul style="color: var(--muted); padding-left: 18px">
+                  <li>In-house quality inspection</li>
+                  <li>Bulk packaging & timely dispatch</li>
+                  <li>Custom orders available</li>
+                </ul>
+              </div>
+
+              <div style="width: 260px">
+                <div class="contact-card">
+                  <div style="font-weight: 700; margin-bottom: 6px">
+                    Contact
+                  </div>
+                  <div style="font-size: 14px; color: var(--muted)">Phone</div>
+                  <div style="font-weight: 700">98158-33885</div>
+                  <div style="font-weight: 700">98726-64833</div>
+                  <div
+                    style="
+                      margin-top: 10px;
+                      font-size: 13px;
+                      color: var(--muted);
+                    "
+                  >
+                    <strong>GST:</strong> 03AAAFT6655Q1ZP
+                  </div>
+                  <div
+                    style="
+                      margin-top: 12px;
+                      font-size: 13px;
+                      color: var(--muted);
+                    "
+                  >
+                    <strong>Email:</strong><br />jodhhosieryworks@gmail.com
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CONTACT section now only shows details (form removed) -->
+        <section id="contact" class="mb-5">
+          <div
+            style="display: grid; grid-template-columns: 1fr 360px; gap: 18px"
+          >
+            <div>
+              <div class="hero-card">
+                <h5 style="margin-top: 0">Factory Details</h5>
+                <div style="color: var(--muted); font-size: 14px">Address</div>
+                <div style="font-weight: 700">
+                  B-XXX-4190/1, St. No. 6, Beant Pura, Chandigarh Road,
+                  Ludhiana-141003
+                </div>
+
+                <div
+                  style="margin-top: 10px; color: var(--muted); font-size: 14px"
+                >
+                  Email
+                </div>
+                <div style="font-weight: 700">jodhhosieryworks@gmail.com</div>
+
+                <div
+                  style="margin-top: 12px; color: var(--muted); font-size: 13px"
+                >
+                  Open for bulk orders, tenders and custom manufacturing.
+                </div>
+              </div>
+            </div>
+
+            <aside>
+              <div class="hero-card">
+                <h6 style="margin-top: 0">Quick Contact</h6>
+                <div style="color: var(--muted); font-size: 14px">Phone</div>
+                <div style="font-weight: 700">98158-33885</div>
+                <div style="font-weight: 700">98726-64833</div>
+                <div
+                  style="margin-top: 10px; color: var(--muted); font-size: 13px"
+                >
+                  <strong>GST:</strong> 03AAAFT6655Q1ZP
+                </div>
+                <div
+                  style="margin-top: 10px; color: var(--muted); font-size: 13px"
+                >
+                  <strong>Email:</strong> jodhhosieryworks@gmail.com
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <footer>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              gap: 16px;
+              flex-wrap: wrap;
+            "
+          >
+            <div>
+              <div style="font-weight: 700">Trikha Weaving Factory</div>
+              <div style="color: var(--muted); font-size: 13px">
+                Manufacturers & Traders — Textiles
+              </div>
+            </div>
+            <div style="color: var(--muted); font-size: 13px">
+              &copy; <span id="year"></span> Trikha Weaving Factory. All Rights
+              Reserved.
+            </div>
+          </div>
+        </footer>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+      // enquiry form removed — no form JS required
+    </script>
+  </body>
+</html>
